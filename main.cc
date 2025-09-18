@@ -1,6 +1,7 @@
 #include <drogon/drogon.h>
 #include <cstdlib>
 #include <string>
+#include <filesystem>
 
 using namespace drogon;
 
@@ -16,7 +17,17 @@ int main()
 
     // Set document root - in Docker it's relative to /app
     const char* docRoot = std::getenv("DOCUMENT_ROOT");
-    app().setDocumentRoot(docRoot ? docRoot : "./static");
+    if (docRoot) {
+        app().setDocumentRoot(docRoot);
+    } else {
+        // Check if we're running from build directory (development)
+        std::string docRootPath = "./static";
+        if (std::filesystem::exists("../static") && !std::filesystem::exists("./static")) {
+            docRootPath = "../static";
+            LOG_INFO << "Development mode detected - using document root: " << docRootPath;
+        }
+        app().setDocumentRoot(docRootPath);
+    }
 
     app().enableSession(1200);
 
