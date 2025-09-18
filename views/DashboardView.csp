@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - [[full_name_ar]]</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>لوحة التحكم</h1>
+            </div>
+            <div class="navbar-user">
+                <span class="user-name">مرحباً، [[full_name_ar]]</span>
+                <a href="/admin/logout" class="logout-link">تسجيل الخروج</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="menu-item active">
+                    <a href="/admin/dashboard">
+                        <span class="menu-icon">🏠</span>
+                        <span class="menu-text">الرئيسية</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <span class="menu-icon">👥</span>
+                        <span class="menu-text">المستخدمون</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <span class="menu-icon">📊</span>
+                        <span class="menu-text">التقارير</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <span class="menu-icon">⚙️</span>
+                        <span class="menu-text">الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h2>مرحباً بك في لوحة التحكم</h2>
+                <p class="page-subtitle">هنا يمكنك إدارة جميع جوانب النظام</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👤</div>
+                    <div class="stat-details">
+                        <h3>المستخدم الحالي</h3>
+                        <p class="stat-value">[[username]]</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🕐</div>
+                    <div class="stat-details">
+                        <h3>الوقت الحالي</h3>
+                        <p class="stat-value">[[current_time]]</p>
+                        <p class="stat-label">توقيت عمّان</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-details">
+                        <h3>التاريخ</h3>
+                        <p class="stat-value" id="current-date"></p>
+                        <p class="stat-label">التقويم الميلادي</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-details">
+                        <h3>حالة النظام</h3>
+                        <p class="stat-value status-active">نشط</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>الإجراءات السريعة</h3>
+                <div class="actions-grid">
+                    <button class="action-button" disabled>
+                        <span class="action-icon">➕</span>
+                        <span>إضافة مستخدم</span>
+                    </button>
+                    <button class="action-button" disabled>
+                        <span class="action-icon">📝</span>
+                        <span>عرض السجلات</span>
+                    </button>
+                    <button class="action-button" disabled>
+                        <span class="action-icon">📈</span>
+                        <span>إنشاء تقرير</span>
+                    </button>
+                    <button class="action-button" disabled>
+                        <span class="action-icon">🔧</span>
+                        <span>الإعدادات</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>معلومات النظام</h4>
+                <ul>
+                    <li>اللغة: العربية</li>
+                    <li>الاتجاه: من اليمين إلى اليسار (RTL)</li>
+                    <li>المنطقة الزمنية: آسيا/عمّان (UTC+3)</li>
+                    <li>صيغة الأرقام: 0123456789</li>
+                    <li>التقويم: الميلادي</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

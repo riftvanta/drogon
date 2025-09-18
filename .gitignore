@@ -1,0 +1,52 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# Object files
+*.o
+*.obj
+
+# Executables
+drogon_webapp
+*.exe
+*.out
+
+# Logs
+*.log
+logs/
+app.log
+
+# Temporary files
+*~
+*.tmp
+*.swp
+*.swo
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+*.code-workspace
+
+# Database files (if they contain test data)
+*.db
+*.sqlite
+*.sqlite3
+
+# Core dumps
+core
+core.*
+*.core
+
+# Dependencies
+vcpkg_installed/
+
+# Config files with sensitive data (keep templates)
+config.json
+!config.json.example
+
+# Upload directories (user data)
+uploads/*
+!uploads/.gitkeep

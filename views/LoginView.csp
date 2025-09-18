@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - لوحة الإدارة</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">لوحة الإدارة</h1>
+            <h2 class="login-subtitle">تسجيل الدخول</h2>
+
+            <%c++ try {
+                    std::string error = @@.get<std::string>("error");
+                    if(!error.empty()) { %>
+            <div class="error-message">
+                <%c++
+                    if(error == "missing_credentials") { %>
+                    <p>الرجاء إدخال اسم المستخدم وكلمة المرور</p>
+                <%c++ } else if(error == "invalid_credentials") { %>
+                    <p>اسم المستخدم أو كلمة المرور غير صحيحة</p>
+                <%c++ } else if(error == "account_disabled") { %>
+                    <p>الحساب معطل. الرجاء التواصل مع المسؤول</p>
+                <%c++ } else if(error == "account_locked") { %>
+                    <p>تم قفل الحساب بسبب محاولات دخول فاشلة متعددة</p>
+                <%c++ } else if(error == "system_error") { %>
+                    <p>حدث خطأ في النظام. الرجاء المحاولة لاحقاً</p>
+                <%c++ } %>
+            </div>
+            <%c++ }} catch(...) {} %>
+
+            <form action="/admin/login" method="POST" class="login-form">
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           class="form-input"
+                           required
+                           autofocus
+                           autocomplete="username"
+                           dir="ltr">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-input"
+                           required
+                           autocomplete="current-password"
+                           dir="ltr">
+                </div>
+
+                <button type="submit" class="login-button">دخول</button>
+            </form>
+
+            <div class="login-footer">
+                <p class="time-display">التوقيت: [[current_time]] (عمّان)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
