@@ -44,6 +44,35 @@ RUN mkdir -p build && cd build \
 RUN drogon_ctl create view views/LoginView.csp \
     && drogon_ctl create view views/DashboardView.csp
 
+# Create config.json for production
+RUN echo '{ \
+  "listeners": [ \
+    { \
+      "address": "0.0.0.0", \
+      "port": 5555, \
+      "https": false \
+    } \
+  ], \
+  "app": { \
+    "threads_num": 0, \
+    "enable_session": true, \
+    "session_timeout": 1200, \
+    "document_root": "./static", \
+    "upload_path": "./uploads", \
+    "max_connections": 100000, \
+    "log": { \
+      "log_level": "INFO" \
+    }, \
+    "use_sendfile": true, \
+    "use_gzip": true, \
+    "static_files_cache_time": 5, \
+    "idle_connection_timeout": 60, \
+    "enable_server_header": true, \
+    "server_header": "drogon/1.9.11" \
+  }, \
+  "db_clients": [] \
+}' > config.json
+
 # Runtime stage
 FROM ubuntu:24.04
 
@@ -51,7 +80,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Amman
 ENV DATABASE_URL=postgres://
 
-# Install runtime dependencies
+# Install runtime dependencies including PostgreSQL client
 RUN apt-get update && apt-get install -y \
     libjsoncpp25 \
     uuid-runtime \
@@ -60,6 +89,7 @@ RUN apt-get update && apt-get install -y \
     zlib1g \
     libsqlite3-0 \
     libpq5 \
+    postgresql-client \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
@@ -72,9 +102,14 @@ WORKDIR /app
 COPY --from=builder /app/build/drogon_webapp .
 COPY --from=builder /app/static ./static
 COPY --from=builder /app/config.json .
-COPY --from=builder /app/database.db .
+# Note: database.db not needed in production - using PostgreSQL
 COPY --from=builder /app/views/*.h ./views/
 COPY --from=builder /app/views/*.cc ./views/
+COPY --from=builder /app/sql ./sql
+
+# Copy startup script
+COPY startup.sh /app/startup.sh
+RUN chmod +x /app/startup.sh
 
 # Update library cache
 RUN ldconfig
@@ -86,5 +121,5 @@ USER appuser
 # Expose port
 EXPOSE 5555
 
-# Run the application
-CMD ["./drogon_webapp"]
+# Run the application with startup script
+CMD ["/app/startup.sh"]
